@@ -19,5 +19,17 @@ public class Player : MonoBehaviour
         {
             move.MoveForward();
         }
+        if(Input.GetKey(KeyCode.RightArrow))
+        {
+            move.MoveRight();
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            move.MoveBack();
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            move.MoveLeft();
+        }
     }
 }
