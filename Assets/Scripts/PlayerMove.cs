@@ -22,6 +22,10 @@ public class PlayerMove : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 回転
+    /// </summary>
+    /// <param name="speed">回転速度</param>
     private void TurnAround(float speed)
     {
         float y = transform.eulerAngles.y + speed * Time.deltaTime;
@@ -54,10 +58,7 @@ public class PlayerMove : MonoBehaviour
             rigid.AddForce(Vector3.forward * speed);
         }
         // 角度がマイナスになった場合の対処
-        if(angle < 0)
-        {
-            rigid.rotation = Quaternion.AngleAxis(0.0f, Vector3.up);
-        }
+        MinusAngleSolution(angle);
     }
 
     /// <summary>
@@ -84,10 +85,7 @@ public class PlayerMove : MonoBehaviour
             rigid.AddForce(Vector3.right * speed);
         }
         // 角度がマイナスになった場合の対処
-        if (angle < 0)
-        {
-            rigid.rotation = Quaternion.AngleAxis(0.0f, Vector3.up);
-        }
+        MinusAngleSolution(angle);
     }
 
     /// <summary>
@@ -113,10 +111,7 @@ public class PlayerMove : MonoBehaviour
             rigid.AddForce(Vector3.back * speed);
         }
         // 角度がマイナスになった場合の対処
-        if (angle < 0)
-        {
-            rigid.rotation = Quaternion.AngleAxis(0.0f, Vector3.up);
-        }
+        MinusAngleSolution(angle);
     }
 
     /// <summary>
@@ -141,6 +136,16 @@ public class PlayerMove : MonoBehaviour
             // 前進
             rigid.AddForce(Vector3.left * speed);
         }
+        // 角度がマイナスになった場合の対処
+        MinusAngleSolution(angle);
+    }
+
+    /// <summary>
+    /// 向きがマイナスになった場合の対処
+    /// </summary>
+    /// <param name="angle">向き</param>
+    private void MinusAngleSolution(float angle)
+    {
         // 角度がマイナスになった場合の対処
         if (angle < 0)
         {
