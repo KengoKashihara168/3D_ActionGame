@@ -22,6 +22,6 @@ public class PlayerMove : MonoBehaviour
     /// <param name="dir">移動する方向</param>
     public void Movement(Vector3 dir)
     {
-
+        Debug.Log(dir);
     }
 }
