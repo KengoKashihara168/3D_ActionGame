@@ -40,7 +40,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (rigid.velocity.z >= MaxSpeed) return;
         float angle = transform.eulerAngles.y;
-        Debug.Log("右へ移動");
+        Debug.Log("前へ移動");
         // -Y方向へ回転
         if (angle > 1.0f && angle < 180.0f)
         {
@@ -68,7 +68,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (rigid.velocity.x >= MaxSpeed) return;
         float angle = transform.eulerAngles.y;
-
+        Debug.Log("右へ移動");
         // -Y方向へ回転
         if (angle > 91.0f && angle <= 270.0f)
         {
@@ -95,6 +95,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (rigid.velocity.z <= -MaxSpeed) return;
         float angle = transform.eulerAngles.y;
+        Debug.Log("後ろへ移動");
         // -Y方向へ回転
         if (angle >= 181.0f && angle <= 360.0f)
         {
@@ -121,6 +122,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (rigid.velocity.x <= -MaxSpeed) return;
         float angle = transform.eulerAngles.y;
+        Debug.Log("左へ移動");
         if (angle >= 0.0f && angle < 90.0f || angle >= 271.0f && angle <= 360.0f)
         {
             // -Y方向へ回転
