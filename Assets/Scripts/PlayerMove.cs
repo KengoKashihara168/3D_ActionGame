@@ -6,7 +6,6 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float MaxSpeed = 0.0f;
     [SerializeField] private float moveSpeed = 0.0f;
-    [SerializeField] private float deceleration = 0.0f;
 
     private Rigidbody rigid;
 
@@ -20,7 +19,7 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         // 減速
-        rigid.AddForce(GetDecelerate());
+        //rigid.AddForce(GetDecelerate());
     }
 
     /// <summary>
@@ -29,20 +28,30 @@ public class PlayerMove : MonoBehaviour
     /// <param name="dir">移動する方向</param>
     public void Movement(Vector3 dir)
     {
-        if (rigid.velocity.sqrMagnitude >= MaxSpeed * MaxSpeed) return;
+        Decelerate(dir);
 
+        if (rigid.velocity.sqrMagnitude >= MaxSpeed * MaxSpeed) return;
         Vector3 force = dir.normalized * moveSpeed;
         rigid.AddForce(force);
     }
 
     /// <summary>
-    /// 減速率の取得
+    /// 減速
     /// </summary>
-    /// <returns>減速率</returns>
-    private Vector3 GetDecelerate()
+    public void Decelerate(Vector3 dir)
     {
-        Vector3 force = rigid.velocity.normalized * moveSpeed;
-        Vector3 decelerate = -force * deceleration;
-        return decelerate;
+        Vector3 vel = rigid.velocity;
+
+        // 左右キーが入力されていなければ
+        if(Mathf.Approximately(dir.x,0.0f))
+        {
+            vel.x = 0.0f;
+        }
+        // 上下キーが入力されていなければ
+        if (Mathf.Approximately(dir.z, 0.0f)) 
+        {
+            vel.z = 0.0f;
+        }
+        rigid.velocity = vel;
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private PlayerMove move;
-    float time;
+    private LineRenderer line;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,18 +16,26 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        //Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        Vector3 dir = Vector3.zero;
+
+        if(Input.GetKey(KeyCode.UpArrow))
+        {
+            dir += Vector3.forward;
+        }
+        if(Input.GetKey(KeyCode.DownArrow))
+        {
+            dir += Vector3.back;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            dir += Vector3.left;
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            dir += Vector3.right;
+        }
+
         move.Movement(dir);
-
-        if(Input.GetKeyUp(KeyCode.UpArrow))
-        {
-            time = Time.time;
-        }
-
-        if(GetComponent<Rigidbody>().velocity.z <= 0.0f && time > 0.0f)
-        {
-            Debug.Log(Time.time - time);
-            time = 0.0f;
-        }
     }
 }
