@@ -15,15 +15,15 @@
             "."
         ],
         "fbxSavePaths": [
-            "Models",
-            "."
+            ".",
+            "Models"
         ],
         "selectedFbxPath": 0,
         "selectedPrefabPath": 0,
         "dccOptionNames": [],
         "dccOptionPaths": [],
         "exportModelSettingsSerialize": {
-            "exportFormat": 0,
+            "exportFormat": 1,
             "animatedSkinnedMesh": false,
             "mayaCompatibleNaming": true,
             "include": 0,
