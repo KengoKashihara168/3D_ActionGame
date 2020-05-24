@@ -36,12 +36,13 @@ public struct CardData
 public class Card : MonoBehaviour
 {
     private CardData data;
+    private GameManager gameManager;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        data.suit   = Suit.Spade;
+        data.suit = Suit.Spade;
         data.number = Number.Ace;
+        gameManager = null;
     }
 
     // Update is called once per frame
@@ -56,6 +57,27 @@ public class Card : MonoBehaviour
         if(other.tag.Equals("Player"))
         {
             Debug.Log("Player Hit");
+            gameManager.CardAcquisitionNotification(data);
         }
+    }
+
+    /// <summary>
+    /// カードの情報を設定
+    /// </summary>
+    /// <param name="suit">柄</param>
+    /// <param name="number">数字</param>
+    public void SetCardData(Suit suit,Number number)
+    {
+        data.suit = suit;
+        data.number = number;
+    }
+
+    /// <summary>
+    /// ゲームマネージャーを設定
+    /// </summary>
+    /// <param name="manager">ゲームマネージャー</param>
+    public void SetGameManager(GameManager manager)
+    {
+        gameManager = manager;
     }
 }
