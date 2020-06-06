@@ -35,14 +35,14 @@ public struct CardData
 
 public class Card : MonoBehaviour
 {
-    private CardData data;
-    private GameManager gameManager;
+    public bool isGetting { get; private set; }
+    public CardData data;
 
     private void Awake()
     {
         data.suit = Suit.Spade;
         data.number = Number.Ace;
-        gameManager = null;
+        isGetting = false;
     }
 
     // Update is called once per frame
@@ -57,7 +57,7 @@ public class Card : MonoBehaviour
         if(other.tag.Equals("Player"))
         {
             Debug.Log("Player Hit");
-            gameManager.CardAcquisitionNotification(data);
+            isGetting = true;
         }
     }
 
@@ -73,11 +73,11 @@ public class Card : MonoBehaviour
     }
 
     /// <summary>
-    /// ゲームマネージャーを設定
+    /// カード情報を取得
     /// </summary>
-    /// <param name="manager">ゲームマネージャー</param>
-    public void SetGameManager(GameManager manager)
+    /// <returns>カード情報</returns>
+    public CardData GetCardData()
     {
-        gameManager = manager;
+        return data;
     }
 }

@@ -12,7 +12,7 @@ public class Score : MonoBehaviour
     void Start()
     {
         score = 0;
-        SetText();
+        UpdateText();
     }
 
     // Update is called once per frame
@@ -27,23 +27,11 @@ public class Score : MonoBehaviour
     /// <param name="point">点数</param>
     public void AddScore(int point)
     {
-        if (point < 0) return;
         score += point;
-        SetText();
+        UpdateText();
     }
 
-    /// <summary>
-    /// 減点
-    /// </summary>
-    /// <param name="point">点数</param>
-    public void SubScore(int point)
-    {
-        if (point < 0) return;
-        score -= point;
-        SetText();
-    }
-
-    private void SetText()
+    private void UpdateText()
     {
         text.text = "スコア：" + score;
     }

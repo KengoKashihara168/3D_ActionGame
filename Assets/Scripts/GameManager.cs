@@ -1,50 +1,106 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private readonly int TimeBonus = 100;            // 時間による加点
-    private readonly float BonusValidityTime = 5.0f; // ボーナス有効時間
-
-    [SerializeField] private Card card = null;
+    [SerializeField] private List<Card> cards = null;
     [SerializeField] private Score score = null;
-
-    private Suit subjectSuit;   // 課題の柄
-    private int currentNumber;  // 現在の数字
-    private int acquiredNumber; // 取得枚数
 
     // Start is called before the first frame update
     void Start()
     {
-        subjectSuit = Suit.Heart;
-        GameManager manager = GetComponent<GameManager>();
-        card.SetGameManager(manager);
-        card.SetCardData(Suit.Heart, Number.Ace);
-        
-        currentNumber = 0;
-        acquiredNumber = 0;
+        // カードの初期化
+        InitializeCards();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        // カードが取得されたかチェック
+        CheckCardGetting();
     }
 
     /// <summary>
-    /// カード取得通知
+    /// カードの初期化
     /// </summary>
-    /// <param name="card">取得したカード</param>
-    public void CardAcquisitionNotification(CardData card)
+    private void InitializeCards()
     {
-        int point = 0; // ポイント
+        foreach(var card in cards)
+        {
+            // カードの値を設定
+            card.SetCardData(Suit.Heart, Number.Ace);
+        }
+    }
 
-        Debug.Log("Suit = " + card.suit + " ,Number = " + card.number);
+    /// <summary>
+    /// カードの更新
+    /// </summary>
+    private void UpdateCards()
+    {
+        // カードが取得されたかチェック
+        int getIndex = CheckCardGetting();
 
-        if (card.suit == subjectSuit) point += 100;
+        // カードが取得されていれば
+        if(getIndex > 0)
+        {
+            // カードの取得
+            GetCard(getIndex);
+        }
+    }
 
-        Debug.Log(point);
+    /// <summary>
+    /// カードが取得されたかチェックする
+    /// </summary>
+    private int CheckCardGetting()
+    {
+        int index = 0;
+
+        for(int i = 0;i < cards.Count;i++)
+        {
+            if(cards[i].isGetting)
+            {
+                index = i;
+                Debug.Log("取得されたカードのインデックス：" + index);
+            }
+        }
+
+        return index;
+    }
+
+    /// <summary>
+    /// カードの取得
+    /// </summary>
+    /// <param name="index">カードのインデックス</param>
+    private void GetCard(int index)
+    {
+        // スコアを反映する
+        ReflectedInScore();
+        // カードを削除する
+        DeleteCard(index);
+    }
+
+    /// <summary>
+    /// スコアを反映
+    /// </summary>
+    private void ReflectedInScore()
+    {
+        int point = 100; // 得点
+
+        // 加点
         score.AddScore(point);
     }
+
+    /// <summary>
+    /// カードを削除
+    /// </summary>
+    /// <param name="index">カードのインデックス</param>
+    private void DeleteCard(int index)
+    {
+        CardData card = cards[index].GetCardData();
+        Debug.Log(card.suit + "の" + card.number + "を削除");
+        cards.RemoveAt(index);
+    }
+
 }
