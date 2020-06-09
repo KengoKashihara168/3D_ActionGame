@@ -5,20 +5,16 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    private int score;
-    [SerializeField] private Text text = null;
-
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Text text = null; // スコア表示用テキスト
+    private int score;                         // スコア
+ 
+    /// <summary>
+    /// スコアの初期化
+    /// </summary>
+    public void InitializeScore()
     {
         score = 0;
         UpdateText();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     /// <summary>
@@ -31,8 +27,11 @@ public class Score : MonoBehaviour
         UpdateText();
     }
 
+    /// <summary>
+    /// テキストの更新
+    /// </summary>
     private void UpdateText()
     {
-        text.text = "スコア：" + score;
+        text.text = score.ToString();
     }
 }
