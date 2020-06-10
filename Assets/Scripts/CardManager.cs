@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-    [SerializeField] private List<Card> cards = null; // カードリスト
-    [SerializeField] private Score      score = null; // スコア
+    private readonly float CardPositionY = 6.0f;
+
+    [SerializeField] private GameObject cardPrefab   = null;
+    [SerializeField] private Material   cardMaterial = null;
+    [SerializeField] private Score      score        = null; // スコア
+
+    private List<Card> cards; // カードリスト
 
     /// <summary>
     /// 初期化
     /// </summary>
     public void Initialize()
     {
+        // カードリストの初期化
+        cards = new List<Card>();
+
+        // カードの生成
+        CreateCard();
+
         foreach (var card in cards)
         {
             // カードの値を設定
@@ -36,6 +47,25 @@ public class CardManager : MonoBehaviour
             // カードの取得
             GetCard(getIndex);
         }
+    }
+
+    /// <summary>
+    /// カードの生成
+    /// </summary>
+    private void CreateCard()
+    {
+        if (cardPrefab == null || cardMaterial == null)
+        {
+            Debug.LogError("カード生成できませんでした");
+            return;
+        }
+
+        // カードの生成
+        GameObject card = GameObject.Instantiate(cardPrefab);
+        // マテリアルの設定
+        card.GetComponent<MeshRenderer>().material = cardMaterial;
+        // カードリストに登録
+        cards.Add(card.GetComponent<Card>());
     }
 
     /// <summary>
