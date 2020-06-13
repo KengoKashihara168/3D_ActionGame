@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static readonly float MaxStageSize = 300.0f;
+
     [SerializeField] private CardManager cardManager = null;
 
     // Start is called before the first frame update

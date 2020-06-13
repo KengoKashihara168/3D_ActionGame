@@ -82,6 +82,7 @@ public class CardManager : MonoBehaviour
         // カードのマテリアルを設定
         SetMaterial();
         // カードの座標を設定
+        SetCardPosition();
     }
 
     /// <summary>
@@ -109,6 +110,20 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    private void SetCardPosition()
+    {
+        float range = (GameManager.MaxStageSize / 2) - (cards[0].transform.localScale.x); // 座標の範囲
+        for (int i = 0; i < MaxCardCount; i++)
+        {
+            Vector3 pos = Vector3.zero;
+            pos.x = Random.Range(-range, range);
+            pos.y = CardPositionY;
+            pos.z = Random.Range(-range, range);
+
+            cards[i].transform.position = pos;
+        }
+    }
+
     /// <summary>
     /// カードが取得されたかチェックする
     /// </summary>
@@ -116,12 +131,13 @@ public class CardManager : MonoBehaviour
     {
         int index = -1;
 
-        for (int i = 0; i < cards.Length; i++)
+        foreach(var card in cards)
         {
-            if (cards[i].isGetting)
+            index++;
+            if (card.isGetting)
             {
-                index = i;
                 Debug.Log("取得されたカードのインデックス：" + index);
+                return index;
             }
         }
 
