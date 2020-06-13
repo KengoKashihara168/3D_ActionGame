@@ -27,6 +27,22 @@ public enum Suit
     Diamond,
 }
 
+public enum Junishi
+{
+    Ne,      // 子
+    Ushi,    // 丑
+    Tora,    // 寅
+    U,       // 卯
+    Tatsu,   // 辰
+    Mi,      // 巳
+    Uma,     // 午
+    Hitsuji, // 未
+    Saru,    // 申
+    Tori,    // 酉
+    Inu,     // 戌
+    I,       // 亥
+}
+
 public struct CardData
 {
     public Suit suit;
@@ -37,6 +53,17 @@ public class Card : MonoBehaviour
 {
     public bool isGetting { get; private set; }
     public CardData data;
+    private Junishi eto;
+
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    /// <param name="type">カードの干支</param>
+    public void Initialize(Junishi type)
+    {
+        eto = type;
+        isGetting = false;
+    }
 
     private void Awake()
     {

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
+    private readonly int MaxCardCount = 12;
     private readonly float CardPositionY = 6.0f;
 
-    [SerializeField] private GameObject cardPrefab   = null;
-    [SerializeField] private Material   cardMaterial = null;
-    [SerializeField] private Score      score        = null; // スコア
+    [SerializeField] private GameObject   cardPrefab   = null;
+    [SerializeField] private Material[]   cardMaterial = null;
+    [SerializeField] private Score        score        = null; // スコア
 
     private List<Card> cards; // カードリスト
 
@@ -49,23 +50,39 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    private bool IsSetCardMaterial()
+    {
+        if (cardPrefab == null)                 return false;
+        if (cardMaterial == null)               return false;
+        if (cardMaterial.Length < MaxCardCount) return false;
+        if (cardMaterial.Length > MaxCardCount) return false;
+
+        return true;
+    }
+
     /// <summary>
     /// カードの生成
     /// </summary>
     private void CreateCard()
     {
-        if (cardPrefab == null || cardMaterial == null)
+        if (IsSetCardMaterial() == false)
         {
             Debug.LogError("カード生成できませんでした");
             return;
         }
 
-        // カードの生成
-        GameObject card = GameObject.Instantiate(cardPrefab);
-        // マテリアルの設定
-        card.GetComponent<MeshRenderer>().material = cardMaterial;
-        // カードリストに登録
-        cards.Add(card.GetComponent<Card>());
+        for(int i = 0;i < MaxCardCount;i++)
+        {
+            // カードの生成
+            GameObject card = GameObject.Instantiate(cardPrefab);
+            // カードリストに登録
+            cards.Add(card.GetComponent<Card>());
+        }
+    }
+
+    private void InitializeCard()
+    {
+
     }
 
     /// <summary>
