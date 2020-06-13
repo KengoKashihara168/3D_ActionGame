@@ -11,24 +11,18 @@ public class CardManager : MonoBehaviour
     [SerializeField] private Material[]   cardMaterial = null;
     [SerializeField] private Score        score        = null; // スコア
 
-    private List<Card> cards; // カードリスト
+    private Card[] cards; // カードリスト
 
     /// <summary>
     /// 初期化
     /// </summary>
     public void Initialize()
     {
-        // カードリストの初期化
-        cards = new List<Card>();
-
+        cards = new Card[MaxCardCount];
         // カードの生成
         CreateCard();
-
-        foreach (var card in cards)
-        {
-            // カードの値を設定
-            card.SetCardData(Suit.Heart, Number.Ace);
-        }
+        // カードの初期化
+        InitializeCard();
 
         // スコアの初期化
         score.InitializeScore();
@@ -65,6 +59,7 @@ public class CardManager : MonoBehaviour
     /// </summary>
     private void CreateCard()
     {
+        // カードを生成できるか確認
         if (IsSetCardMaterial() == false)
         {
             Debug.LogError("カード生成できませんでした");
@@ -76,13 +71,42 @@ public class CardManager : MonoBehaviour
             // カードの生成
             GameObject card = GameObject.Instantiate(cardPrefab);
             // カードリストに登録
-            cards.Add(card.GetComponent<Card>());
+            cards[i] = card.GetComponent<Card>();
         }
     }
 
     private void InitializeCard()
     {
+        // カードの情報を設定
+        SetCardData();
+        // カードのマテリアルを設定
+        SetMaterial();
+        // カードの座標を設定
+    }
 
+    /// <summary>
+    /// カードの情報を設定
+    /// </summary>
+    private void SetCardData()
+    {
+        for (int i = 0; i < MaxCardCount; i++)
+        {
+            Junishi eto = (Junishi)i;
+            cards[i].Initialize(eto);
+            cards[i].name = eto.ToString();
+        }
+    }
+
+    /// <summary>
+    /// カードのマテリアルを設定
+    /// </summary>
+    private void SetMaterial()
+    {
+        for (int i = 0; i < MaxCardCount; i++)
+        {
+            MeshRenderer renderer = cards[i].GetComponent<MeshRenderer>();
+            renderer.material = cardMaterial[i];
+        }
     }
 
     /// <summary>
@@ -92,7 +116,7 @@ public class CardManager : MonoBehaviour
     {
         int index = -1;
 
-        for (int i = 0; i < cards.Count; i++)
+        for (int i = 0; i < cards.Length; i++)
         {
             if (cards[i].isGetting)
             {
@@ -133,8 +157,8 @@ public class CardManager : MonoBehaviour
     /// <param name="index">カードのインデックス</param>
     private void DeleteCard(int index)
     {
-        CardData card = cards[index].GetCardData();
-        Debug.Log(card.suit + "の" + card.number + "を削除");
-        cards.RemoveAt(index);
+        Junishi eto = cards[index].GetJunishi();
+        Debug.Log(eto + "を削除");
+        cards[index] = null;
     }
 }
