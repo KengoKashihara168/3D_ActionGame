@@ -28,22 +28,6 @@ public class CardManager : MonoBehaviour
         score.InitializeScore();
     }
 
-    /// <summary>
-    /// カードの更新
-    /// </summary>
-    public void UpdateCard()
-    {
-        // カードが取得されたかチェック
-        int getIndex = CheckCardGetting();
-
-        // カードが取得されていれば
-        if (getIndex >= 0)
-        {
-            // カードの取得
-            GetCard(getIndex);
-        }
-    }
-
     private bool IsSetCardMaterial()
     {
         if (cardPrefab == null)                 return false;
@@ -125,17 +109,33 @@ public class CardManager : MonoBehaviour
     }
 
     /// <summary>
+    /// カードの更新
+    /// </summary>
+    public void UpdateCard()
+    {
+        // カードが取得されたかチェック
+        int getIndex = CheckCardGetting();
+
+        // カードが取得されていれば
+        if (getIndex >= 0)
+        {
+            // カードの取得
+            GetCard(getIndex);
+        }
+    }
+
+    /// <summary>
     /// カードが取得されたかチェックする
     /// </summary>
     private int CheckCardGetting()
     {
         int index = -1;
 
-        foreach(var card in cards)
+        for(int i = 0;i < MaxCardCount;i++)
         {
-            index++;
-            if (card.isGetting)
+            if (cards[i].isGetting && cards[i].gameObject.activeSelf)
             {
+                index = i;
                 Debug.Log("取得されたカードのインデックス：" + index);
                 return index;
             }
@@ -153,7 +153,7 @@ public class CardManager : MonoBehaviour
         // スコアを反映する
         ReflectedInScore();
         // カードを削除する
-        DeleteCard(index);
+        HideCard(index);
     }
 
     /// <summary>
@@ -168,13 +168,13 @@ public class CardManager : MonoBehaviour
     }
 
     /// <summary>
-    /// カードを削除
+    /// カードを非表示
     /// </summary>
     /// <param name="index">カードのインデックス</param>
-    private void DeleteCard(int index)
+    private void HideCard(int index)
     {
         Junishi eto = cards[index].GetJunishi();
-        Debug.Log(eto + "を削除");
-        cards[index] = null;
+        Debug.Log(eto + "を非表示");
+        cards[index].gameObject.SetActive(false);
     }
 }
