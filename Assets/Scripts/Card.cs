@@ -50,8 +50,23 @@ public class Card : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 十二支の取得
+    /// </summary>
+    /// <returns>十二支</returns>
     public Junishi GetJunishi()
     {
         return eto;
+    }
+
+    /// <summary>
+    /// 取得失敗
+    /// </summary>
+    public void GetFailure()
+    {
+        if (isGetting             == false) return;
+        if (gameObject.activeSelf == false) return;
+
+        isGetting = false;
     }
 }

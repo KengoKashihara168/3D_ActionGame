@@ -11,14 +11,18 @@ public class CardManager : MonoBehaviour
     [SerializeField] private Material[]   cardMaterial = null;
     [SerializeField] private Score        score        = null; // スコア
 
-    private Card[] cards; // カードリスト
+    private Card[]  cards;      // カードリスト
+    private int beforeIndex; // 前に獲得したカード
 
     /// <summary>
     /// 初期化
     /// </summary>
     public void Initialize()
     {
+        // 変数の初期化
         cards = new Card[MaxCardCount];
+        beforeIndex = -1;
+
         // カードの生成
         CreateCard();
         // カードの初期化
@@ -150,21 +154,48 @@ public class CardManager : MonoBehaviour
     /// <param name="index">カードのインデックス</param>
     private void GetCard(int index)
     {
-        // スコアを反映する
-        ReflectedInScore();
-        // カードを削除する
-        HideCard(index);
+        // 正しい順番で取得したか判定
+        if(IsGetRightOrder(index))
+        {
+            // スコアを反映する
+            ReflectedInScore(index);
+            // 取得したカードのインデックスを保持
+            beforeIndex = index;
+            // カードを非表示にする
+            HideCard(index);
+        }
+        else
+        {
+            cards[index].GetFailure();
+            Debug.Log("正しい順番ではありません");
+        }
     }
 
     /// <summary>
     /// スコアを反映
     /// </summary>
-    private void ReflectedInScore()
+    private void ReflectedInScore(int index)
     {
         int point = 100; // 得点
 
         // 加点
         score.AddScore(point);
+    }
+
+    /// <summary>
+    /// 正しい順番で獲得されているか判定
+    /// </summary>
+    /// <param name="index">取得カードのインデックス</param>
+    /// <returns>正順判定結果</returns>
+    private bool IsGetRightOrder(int index)
+    {
+        bool isOrder = true;                // 正順フラグ
+        int  diff    = index - beforeIndex; // インデックスの差
+
+        // 前のカードとの差が１以外なら
+        if (diff > 1) isOrder = false;
+
+        return isOrder;
     }
 
     /// <summary>
