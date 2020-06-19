@@ -28,6 +28,15 @@ public class Score : MonoBehaviour
     }
 
     /// <summary>
+    /// 点数のリセット
+    /// </summary>
+    public void ResetScore()
+    {
+        score = 0;
+        UpdateText();
+    }
+
+    /// <summary>
     /// テキストの更新
     /// </summary>
     private void UpdateText()

@@ -117,27 +117,27 @@ public class CardManager : MonoBehaviour
     /// </summary>
     public void UpdateCard()
     {
-        // カードが取得されたかチェック
-        int getIndex = CheckCardGetting();
+        // 当たっているカードのインデックスを取得
+        int getIndex = GetHitCardIndex();
 
-        // カードが取得されていれば
+        // カードに当たっていれば
         if (getIndex >= 0)
         {
             // カードの取得
-            GetCard(getIndex);
+            JudgeGetCard(getIndex);
         }
     }
 
     /// <summary>
     /// カードが取得されたかチェックする
     /// </summary>
-    private int CheckCardGetting()
+    private int GetHitCardIndex()
     {
         int index = -1;
 
         for(int i = 0;i < MaxCardCount;i++)
         {
-            if (cards[i].isGetting && cards[i].gameObject.activeSelf)
+            if (cards[i].isHitting && cards[i].gameObject.activeSelf)
             {
                 index = i;
                 Debug.Log("取得されたカードのインデックス：" + index);
@@ -152,23 +152,49 @@ public class CardManager : MonoBehaviour
     /// カードの取得
     /// </summary>
     /// <param name="index">カードのインデックス</param>
-    private void GetCard(int index)
+    private void JudgeGetCard(int index)
     {
         // 正しい順番で取得したか判定
         if(IsGetRightOrder(index))
         {
-            // スコアを反映する
-            ReflectedInScore(index);
-            // 取得したカードのインデックスを保持
-            beforeIndex = index;
-            // カードを非表示にする
-            HideCard(index);
+            // カードを取得
+            GetCard(index);
         }
         else
         {
-            cards[index].GetFailure();
-            Debug.Log("正しい順番ではありません");
+            // カードを元に戻す
+            ResetCard(index);
         }
+    }
+
+    /// <summary>
+    /// 正しい順番で獲得されているか判定
+    /// </summary>
+    /// <param name="index">取得カードのインデックス</param>
+    /// <returns>正順判定結果</returns>
+    private bool IsGetRightOrder(int index)
+    {
+        bool isOrder = true;                // 正順フラグ
+        int diff = index - beforeIndex; // インデックスの差
+
+        // 前のカードとの差が１以外なら
+        if (diff > 1) isOrder = false;
+
+        return isOrder;
+    }
+
+    /// <summary>
+    /// カードを取得
+    /// </summary>
+    /// <param name="index">カードのインデックス</param>
+    private void GetCard(int index)
+    {
+        // スコアを反映する
+        ReflectedInScore(index);
+        // 取得したカードのインデックスを保持
+        beforeIndex = index;
+        // カードを非表示にする
+        HideCard(index);
     }
 
     /// <summary>
@@ -183,22 +209,6 @@ public class CardManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 正しい順番で獲得されているか判定
-    /// </summary>
-    /// <param name="index">取得カードのインデックス</param>
-    /// <returns>正順判定結果</returns>
-    private bool IsGetRightOrder(int index)
-    {
-        bool isOrder = true;                // 正順フラグ
-        int  diff    = index - beforeIndex; // インデックスの差
-
-        // 前のカードとの差が１以外なら
-        if (diff > 1) isOrder = false;
-
-        return isOrder;
-    }
-
-    /// <summary>
     /// カードを非表示
     /// </summary>
     /// <param name="index">カードのインデックス</param>
@@ -207,5 +217,34 @@ public class CardManager : MonoBehaviour
         Junishi eto = cards[index].GetJunishi();
         Debug.Log(eto + "を非表示");
         cards[index].gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="index">カードのインデックス</param>
+    private void ResetCard(int index)
+    {
+        Debug.Log("正しい順番ではありません");
+        // カードの再配置
+        SetCardPosition();
+        // カードをすべて表示する
+        ResetCardStatus();
+        // カードのインデックスを最初に戻す
+        beforeIndex = -1;
+        // スコアのリセット
+        score.ResetScore();
+    }
+
+    /// <summary>
+    /// 全てのカードを表示
+    /// </summary>
+    private void ResetCardStatus()
+    {
+        foreach(var card in cards)
+        {
+            card.gameObject.SetActive(true);
+            card.GetFailure();
+        }
     }
 }
