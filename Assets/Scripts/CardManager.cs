@@ -45,7 +45,7 @@ public class CardManager : MonoBehaviour
     {
         if (cardPrefab == null)                  return false; // カードのプレハブがあるか
         if (cardMaterial == null)                return false; // マテリアルがあるか
-        if (cardMaterial.Length == MaxCardCount) return false; // マテリアルの数がカードの数と一致しているか
+        if (cardMaterial.Length != MaxCardCount) return false; // マテリアルの数がカードの数と一致しているか
 
         return true;
     }
