@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform target;
-    [SerializeField] private Vector3 distance;
+    [SerializeField] private Transform target = null;
+    [SerializeField] private Vector3 distance = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
