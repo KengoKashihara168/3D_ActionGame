@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ad685d3aa885741a4fee630be13ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 754204377}
   cardManager: {fileID: 1118765126}
 --- !u!1 &705507993
 GameObject:
@@ -400,7 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8578c6919972864280b64fc93ac1d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 30
+  MaxSpeed: 60
   moveSpeed: 100
 --- !u!114 &754204377
 MonoBehaviour:
