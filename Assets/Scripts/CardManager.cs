@@ -14,6 +14,8 @@ public class CardManager : MonoBehaviour
     private Card[]  cards;      // カードリスト
     private int beforeIndex; // 前に獲得したカード
 
+    public bool isGetAllCards { get; private set; } // 全カード獲得フラグ
+
     /// <summary>
     /// 初期化
     /// </summary>
@@ -30,14 +32,20 @@ public class CardManager : MonoBehaviour
 
         // スコアの初期化
         score.InitializeScore();
+
+        // 終了フラグの初期化
+        isGetAllCards = false;
     }
 
+    /// <summary>
+    /// カードにマテリアルがセットできるか
+    /// </summary>
+    /// <returns></returns>
     private bool IsSetCardMaterial()
     {
-        if (cardPrefab == null)                 return false;
-        if (cardMaterial == null)               return false;
-        if (cardMaterial.Length < MaxCardCount) return false;
-        if (cardMaterial.Length > MaxCardCount) return false;
+        if (cardPrefab == null)                  return false; // カードのプレハブがあるか
+        if (cardMaterial == null)                return false; // マテリアルがあるか
+        if (cardMaterial.Length == MaxCardCount) return false; // マテリアルの数がカードの数と一致しているか
 
         return true;
     }
@@ -63,6 +71,9 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// カードの初期化
+    /// </summary>
     private void InitializeCard()
     {
         // カードの情報を設定
@@ -70,7 +81,9 @@ public class CardManager : MonoBehaviour
         // カードのマテリアルを設定
         SetMaterial();
         // カードの座標を設定
-        SetCardPosition();
+        //SetCardPosition();
+        // デバッグ用
+        DebugCardPosition();
     }
 
     /// <summary>
@@ -98,6 +111,9 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// カードの座標を設定
+    /// </summary>
     private void SetCardPosition()
     {
         float range = (GameManager.MaxStageSize / 2) - (cards[0].transform.localScale.x); // 座標の範囲
@@ -107,6 +123,21 @@ public class CardManager : MonoBehaviour
             pos.x = Random.Range(-range, range);
             pos.y = CardPositionY;
             pos.z = Random.Range(-range, range);
+
+            cards[i].transform.position = pos;
+        }
+    }
+
+    /// <summary>
+    /// デバッグ用カード座標を設定
+    /// </summary>
+    private void DebugCardPosition()
+    {
+        for(int i = 0;i < MaxCardCount;i++)
+        {
+            Vector3 pos = Vector3.zero;
+            pos.y = CardPositionY;
+            pos.z = -130.0f + 1.0f * i;
 
             cards[i].transform.position = pos;
         }
@@ -125,6 +156,14 @@ public class CardManager : MonoBehaviour
         {
             // カードの取得
             JudgeGetCard(getIndex);
+        }
+
+        // カードをすべて獲得していれば
+        if(beforeIndex == MaxCardCount - 1)
+        {
+            // 全カード獲得フラグをtrue
+            isGetAllCards = true;
+            Debug.Log("終了");
         }
     }
 
