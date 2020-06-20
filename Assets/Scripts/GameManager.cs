@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Player      player      = null; // プレイヤー
     [SerializeField] private CardManager cardManager = null; // カードマネージャー
-    [SerializeField] private GameObject  clearPanel  = null; // ゲームクリアパネル
+    [SerializeField] private GameClearManager  clearManager  = null; // ゲームクリアマネージャー
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
         player.Initialize();
         // カードマネージャーの初期化
         cardManager.Initialize();
+        // ゲームクリアマネージャーの初期化
+        clearManager.Initialize();
     }
 
     // Update is called once per frame
@@ -88,8 +90,8 @@ public class GameManager : MonoBehaviour
 
         // プレイヤーの移動停止
         player.StopPlayer();
-        // ゲームクリアパネルを表示
-        clearPanel.SetActive(true);
+        // ゲームクリアパネルの更新
+        clearManager.UpdateGameClearManager();
     }
 
     /// <summary>
