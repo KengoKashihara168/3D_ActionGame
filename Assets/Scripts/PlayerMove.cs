@@ -9,17 +9,12 @@ public class PlayerMove : MonoBehaviour
 
     private Rigidbody rigid;
 
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    public void Initialize()
     {
         rigid = GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // 減速
-        //rigid.AddForce(GetDecelerate());
     }
 
     /// <summary>
