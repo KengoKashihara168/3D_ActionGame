@@ -7,23 +7,22 @@ public class Player : MonoBehaviour
     private PlayerMove move;
     private LineRenderer line;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
+        Debug.Log("Playerの初期化");
         move = GetComponent<PlayerMove>();
+        move.Initialize();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdatePlayer()
     {
-        //Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
         Vector3 dir = Vector3.zero;
 
-        if(Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             dir += Vector3.forward;
         }
-        if(Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             dir += Vector3.back;
         }

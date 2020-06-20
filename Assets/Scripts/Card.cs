@@ -21,7 +21,7 @@ public enum Junishi
 
 public class Card : MonoBehaviour
 {
-    public bool isGetting { get; private set; }
+    public bool isHitting { get; private set; }
     private Junishi eto;
 
     /// <summary>
@@ -31,13 +31,7 @@ public class Card : MonoBehaviour
     public void Initialize(Junishi type)
     {
         eto = type;
-        isGetting = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        isHitting = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,12 +40,24 @@ public class Card : MonoBehaviour
         if(other.tag.Equals("Player"))
         {
             Debug.Log("Player Hit");
-            isGetting = true;
+            isHitting = true;
         }
     }
 
+    /// <summary>
+    /// 十二支の取得
+    /// </summary>
+    /// <returns>十二支</returns>
     public Junishi GetJunishi()
     {
         return eto;
+    }
+
+    /// <summary>
+    /// 取得失敗
+    /// </summary>
+    public void GetFailure()
+    {
+        isHitting = false;
     }
 }
