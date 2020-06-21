@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static readonly float MaxStageSize = 300.0f; // ステージのサイズ
+    private readonly string ClearScene = "ClearScene";
 
     // ゲームの状態
     private enum GameState
@@ -92,6 +94,12 @@ public class GameManager : MonoBehaviour
         player.StopPlayer();
         // ゲームクリアパネルの更新
         clearManager.UpdateGameClearManager();
+        // スペースキーが押されたら
+        if(clearManager.isPushSpace)
+        {
+            // シーン遷移
+            SceneManager.LoadScene(ClearScene);
+        }
     }
 
     /// <summary>
