@@ -37,4 +37,12 @@ public class Player : MonoBehaviour
 
         move.Movement(dir);
     }
+
+    /// <summary>
+    /// プレイヤーの停止
+    /// </summary>
+    public void StopPlayer()
+    {
+        move.Decelerate(Vector3.zero);
+    }
 }
