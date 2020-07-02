@@ -81,9 +81,9 @@ public class CardManager : MonoBehaviour
         // カードのマテリアルを設定
         SetMaterial();
         // カードの座標を設定
-        //SetCardPosition();
+        SetCardPosition();
         // デバッグ用
-        DebugCardPosition();
+        //DebugCardPosition();
     }
 
     /// <summary>
