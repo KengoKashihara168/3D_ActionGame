@@ -150,6 +150,17 @@ public class CardManager : MonoBehaviour
     /// </summary>
     public void UpdateCard()
     {
+        // カードの接触を調べる
+        CheckHitCards();
+        // カードが全て取得されたか調べる
+        isGetAllCards = IsGetAllCards();
+    }
+
+    /// <summary>
+    /// カードが接触しているか調べる
+    /// </summary>
+    private void CheckHitCards()
+    {
         // 当たっているカードのインデックスを取得
         int getIndex = GetHitCardIndex();
 
@@ -159,19 +170,28 @@ public class CardManager : MonoBehaviour
             // カードの取得
             JudgeGetCard(getIndex);
         }
-
-        // カードをすべて獲得していれば
-        if(beforeIndex == MaxCardCount - 1)
-        {
-            // 全カード獲得フラグをtrue
-            isGetAllCards = true;
-            Debug.Log("終了");
-        }
     }
 
     /// <summary>
-    /// カードが取得されたかチェックする
+    /// 全カードが取得されたか
     /// </summary>
+    /// <returns></returns>
+    private bool IsGetAllCards()
+    {
+        // カードをすべて獲得していれば
+        if (beforeIndex == MaxCardCount - 1)
+        {
+            Debug.Log("全カード獲得");
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 接触したカードの配列番号を取得
+    /// </summary>
+    /// <returns>カードの配列番号（-1なら該当なし）</returns>
     private int GetHitCardIndex()
     {
         int index = -1;
