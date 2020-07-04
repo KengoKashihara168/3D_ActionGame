@@ -116,13 +116,15 @@ public class CardManager : MonoBehaviour
     /// </summary>
     private void SetCardPosition()
     {
-        float range = (GameManager.MaxStageSize / 2) - (cards[0].transform.localScale.x); // 座標の範囲
+        float cardWidth = cards[0].transform.localScale.x;
+        float width     = GameManager.MaxStageWidth - cardWidth;
+        float length    = GameManager.MaxStageLength - cardWidth;
         for (int i = 0; i < MaxCardCount; i++)
         {
             Vector3 pos = Vector3.zero;
-            pos.x = Random.Range(-range, range);
+            pos.x = Random.Range(0.0f, width);
             pos.y = CardPositionY;
-            pos.z = Random.Range(-range, range);
+            pos.z = Random.Range(0.0f, length);
 
             cards[i].transform.position = pos;
         }
