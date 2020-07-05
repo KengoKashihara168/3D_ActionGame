@@ -21,6 +21,9 @@ public enum Junishi
 
 public class Card : MonoBehaviour
 {
+    public readonly float CardPositionY = 6.0f;
+    private readonly float MaxHeight = 20.0f;
+    
     public bool isHitting { get; private set; }
     private Junishi eto;
 
@@ -32,6 +35,33 @@ public class Card : MonoBehaviour
     {
         eto = type;
         isHitting = false;
+    }
+
+    /// <summary>
+    /// カードの更新
+    /// </summary>
+    public void CardUpdate()
+    {
+        // フワフワとした運動
+        transform.position = MoveFluffy(transform.position);
+    }
+
+    /// <summary>
+    /// フワフワと運動
+    /// </summary>
+    /// <param name="pos">現在の座標</param>
+    /// <returns>移動した座標</returns>
+    private Vector3 MoveFluffy(Vector3 pos)
+    {
+        Vector3 move = pos;                  // 移動した座標
+        float   y    = CardPositionY;        // 高さ
+        float   sin  = Mathf.Sin(Time.time); // サイン波
+
+        // フワフワとした運動の計算
+        y += MaxHeight * (sin + 1.0f) / 2;
+        move.y = y;
+
+        return move;
     }
 
     private void OnTriggerEnter(Collider other)

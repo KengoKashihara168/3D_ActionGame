@@ -5,7 +5,6 @@ using UnityEngine;
 public class CardManager : MonoBehaviour
 {
     private readonly int MaxCardCount = 12;
-    private readonly float CardPositionY = 6.0f;
 
     [SerializeField] private GameObject   cardPrefab   = null;
     [SerializeField] private Material[]   cardMaterial = null;
@@ -123,7 +122,7 @@ public class CardManager : MonoBehaviour
         {
             Vector3 pos = Vector3.zero;
             pos.x = Random.Range(0.0f, width);
-            pos.y = CardPositionY;
+            pos.y = cards[i].CardPositionY;
             pos.z = Random.Range(0.0f, length);
 
             cards[i].transform.position = pos;
@@ -138,7 +137,7 @@ public class CardManager : MonoBehaviour
         for(int i = 0;i < MaxCardCount;i++)
         {
             Vector3 pos = Vector3.zero;
-            pos.y = CardPositionY;
+            pos.y = cards[i].CardPositionY;
             pos.z = -130.0f + 1.0f * i;
 
             cards[i].transform.position = pos;
@@ -154,6 +153,11 @@ public class CardManager : MonoBehaviour
         CheckHitCards();
         // カードが全て取得されたか調べる
         isGetAllCards = IsGetAllCards();
+        // カードの更新
+        foreach(var card in cards)
+        {
+            card.CardUpdate();
+        }
     }
 
     /// <summary>
