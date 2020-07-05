@@ -8,7 +8,7 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] private GameObject   cardPrefab   = null;
     [SerializeField] private Material[]   cardMaterial = null;
-    [SerializeField] private Score        score        = null; // スコア
+    //[SerializeField] private Score        score        = null; // スコア
 
     private Card[]  cards;      // カードリスト
     private int beforeIndex; // 前に獲得したカード
@@ -30,7 +30,7 @@ public class CardManager : MonoBehaviour
         InitializeCard();
 
         // スコアの初期化
-        score.InitializeScore();
+        //score.InitializeScore();
 
         // 終了フラグの初期化
         isGetAllCards = false;
@@ -255,7 +255,7 @@ public class CardManager : MonoBehaviour
     private void GetCard(int index)
     {
         // スコアを反映する
-        ReflectedInScore(index);
+        //ReflectedInScore(index);
         // 取得したカードのインデックスを保持
         beforeIndex = index;
         // カードを非表示にする
@@ -270,7 +270,7 @@ public class CardManager : MonoBehaviour
         int point = 100; // 得点
 
         // 加点
-        score.AddScore(point);
+        //score.AddScore(point);
     }
 
     /// <summary>
@@ -298,7 +298,7 @@ public class CardManager : MonoBehaviour
         // カードのインデックスを最初に戻す
         beforeIndex = -1;
         // スコアのリセット
-        score.ResetScore();
+        //score.ResetScore();
     }
 
     /// <summary>
