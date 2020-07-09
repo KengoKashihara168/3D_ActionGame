@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static readonly float MaxStageSize = 300.0f; // ステージのサイズ
-    private readonly string ClearScene = "ClearScene";
+    public static readonly float MaxStageWidth  = 370.0f; // ステージの幅
+    public static readonly float MaxStageLength = 850.0f; // ステージの奥行き
+
+    private readonly string ClearScene = "ClearScene"; // クリアシーン名
 
     // ゲームの状態
     private enum GameState
