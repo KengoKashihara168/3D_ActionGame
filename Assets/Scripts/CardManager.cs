@@ -5,11 +5,10 @@ using UnityEngine;
 public class CardManager : MonoBehaviour
 {
     private readonly int MaxCardCount = 12;
-    private readonly float CardPositionY = 6.0f;
 
     [SerializeField] private GameObject   cardPrefab   = null;
     [SerializeField] private Material[]   cardMaterial = null;
-    [SerializeField] private Score        score        = null; // スコア
+    //[SerializeField] private Score        score        = null; // スコア
 
     private Card[]  cards;      // カードリスト
     private int beforeIndex; // 前に獲得したカード
@@ -31,7 +30,7 @@ public class CardManager : MonoBehaviour
         InitializeCard();
 
         // スコアの初期化
-        score.InitializeScore();
+        //score.InitializeScore();
 
         // 終了フラグの初期化
         isGetAllCards = false;
@@ -123,7 +122,7 @@ public class CardManager : MonoBehaviour
         {
             Vector3 pos = Vector3.zero;
             pos.x = Random.Range(0.0f, width);
-            pos.y = CardPositionY;
+            pos.y = cards[i].CardPositionY;
             pos.z = Random.Range(0.0f, length);
 
             cards[i].transform.position = pos;
@@ -138,7 +137,7 @@ public class CardManager : MonoBehaviour
         for(int i = 0;i < MaxCardCount;i++)
         {
             Vector3 pos = Vector3.zero;
-            pos.y = CardPositionY;
+            pos.y = cards[i].CardPositionY;
             pos.z = -130.0f + 1.0f * i;
 
             cards[i].transform.position = pos;
@@ -150,6 +149,22 @@ public class CardManager : MonoBehaviour
     /// </summary>
     public void UpdateCard()
     {
+        // カードの接触を調べる
+        CheckHitCards();
+        // カードが全て取得されたか調べる
+        isGetAllCards = IsGetAllCards();
+        // カードの更新
+        foreach(var card in cards)
+        {
+            card.CardUpdate();
+        }
+    }
+
+    /// <summary>
+    /// カードが接触しているか調べる
+    /// </summary>
+    private void CheckHitCards()
+    {
         // 当たっているカードのインデックスを取得
         int getIndex = GetHitCardIndex();
 
@@ -159,19 +174,28 @@ public class CardManager : MonoBehaviour
             // カードの取得
             JudgeGetCard(getIndex);
         }
-
-        // カードをすべて獲得していれば
-        if(beforeIndex == MaxCardCount - 1)
-        {
-            // 全カード獲得フラグをtrue
-            isGetAllCards = true;
-            Debug.Log("終了");
-        }
     }
 
     /// <summary>
-    /// カードが取得されたかチェックする
+    /// 全カードが取得されたか
     /// </summary>
+    /// <returns></returns>
+    private bool IsGetAllCards()
+    {
+        // カードをすべて獲得していれば
+        if (beforeIndex == MaxCardCount - 1)
+        {
+            Debug.Log("全カード獲得");
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 接触したカードの配列番号を取得
+    /// </summary>
+    /// <returns>カードの配列番号（-1なら該当なし）</returns>
     private int GetHitCardIndex()
     {
         int index = -1;
@@ -231,7 +255,7 @@ public class CardManager : MonoBehaviour
     private void GetCard(int index)
     {
         // スコアを反映する
-        ReflectedInScore(index);
+        //ReflectedInScore(index);
         // 取得したカードのインデックスを保持
         beforeIndex = index;
         // カードを非表示にする
@@ -246,7 +270,7 @@ public class CardManager : MonoBehaviour
         int point = 100; // 得点
 
         // 加点
-        score.AddScore(point);
+        //score.AddScore(point);
     }
 
     /// <summary>
@@ -274,7 +298,7 @@ public class CardManager : MonoBehaviour
         // カードのインデックスを最初に戻す
         beforeIndex = -1;
         // スコアのリセット
-        score.ResetScore();
+        //score.ResetScore();
     }
 
     /// <summary>
