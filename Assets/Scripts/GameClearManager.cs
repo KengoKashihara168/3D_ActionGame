@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class GameClearManager : MonoBehaviour
 {
+    private readonly float MaxOverTime = 1.0f;
+
     [SerializeField] private GameObject clearPanel = null; // ゲームクリアパネル
 
-    public bool isPushSpace { get; private set; } // スペースキー押下フラグ
+    public bool isTimeOver { get; private set; } // スペースキー押下フラグ
+    private float elapsedTime;
 
     /// <summary>
     /// 初期化
@@ -15,7 +18,8 @@ public class GameClearManager : MonoBehaviour
     public void Initialize()
     {
         clearPanel.SetActive(false);
-        isPushSpace = false;
+        isTimeOver = false;
+        elapsedTime = 0.0f;
     }
 
     /// <summary>
@@ -24,13 +28,15 @@ public class GameClearManager : MonoBehaviour
     public void UpdateGameClearManager()
     {
         // パネルの表示
-        ShowPanel();
+        //ShowPanel();
+        // 経過時間の加算
+        elapsedTime += Time.deltaTime;
 
         // スペースキーが押されたら
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(elapsedTime > MaxOverTime)
         {
             // スペースキー押下フラグをtrue
-            isPushSpace = true;
+            isTimeOver = true;
         }
     }
 

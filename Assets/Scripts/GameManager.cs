@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
         // ゲームクリアパネルの更新
         clearManager.UpdateGameClearManager();
         // スペースキーが押されたら
-        if(clearManager.isPushSpace)
+        if(clearManager.isTimeOver)
         {
             // シーン遷移
             SceneManager.LoadScene(ClearScene);

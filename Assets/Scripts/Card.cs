@@ -22,7 +22,7 @@ public enum Junishi
 public class Card : MonoBehaviour
 {
     public readonly float CardPositionY = 6.0f;
-    private readonly float MaxHeight = 20.0f;
+    private readonly float MaxHeight = 15.0f;
     
     public bool isHitting { get; private set; }
     private Junishi eto;
