@@ -137,8 +137,9 @@ public class CardManager : MonoBehaviour
         for(int i = 0;i < MaxCardCount;i++)
         {
             Vector3 pos = Vector3.zero;
+            pos.x = 180.0f;
             pos.y = cards[i].CardPositionY;
-            pos.z = -130.0f + 1.0f * i;
+            pos.z = 20.0f + 1.0f * i;
 
             cards[i].transform.position = pos;
         }
