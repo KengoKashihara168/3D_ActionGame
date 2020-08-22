@@ -1830,6 +1830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffect: {fileID: 8300000, guid: 8c6fc3d2c90764c80b1d2d85367b36ee, type: 3}
+  sePlayTime: 1
   isStopBGM: 1
 --- !u!4 &2147274965
 Transform:

@@ -10,6 +10,7 @@ public class TitleScene : MonoBehaviour
 
     // 外部設定変数
     [SerializeField] private AudioClip soundEffect = null;  // SE
+    [SerializeField] private float     sePlayTime  = 0.0f;  // SEの再生時間
     [SerializeField] private bool      isStopBGM   = false; // SE再生時にBGMを停止するフラグ
 
     private SoundManager sound;     // サウンド
@@ -33,7 +34,7 @@ public class TitleScene : MonoBehaviour
         {
             isPushKey = true;
             // SEの再生
-            sound.PlaySE(soundEffect, isStopBGM);
+            sound.PlaySE(soundEffect);
         }
 
         if(isPushKey)
@@ -50,7 +51,7 @@ public class TitleScene : MonoBehaviour
     private void ChangeScene()
     {
         // SEの再生が終了していたら
-        if(sound.IsEndSE(soundEffect.name))
+        if(sound.IsEndSE(soundEffect.name,sePlayTime))
         {
             SceneManager.LoadScene(NextScene);
         }
