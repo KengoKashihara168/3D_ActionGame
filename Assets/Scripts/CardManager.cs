@@ -265,7 +265,7 @@ public class CardManager : MonoBehaviour
         // カードを非表示にする
         HideCard(index);
         // SEを再生する
-        soundManager.PlaySE(successSE);
+        soundManager.PlaySE(successSE,0.0f);
     }
 
     /// <summary>
@@ -304,7 +304,7 @@ public class CardManager : MonoBehaviour
         // カードのインデックスを最初に戻す
         beforeIndex = -1;
         // SEの再生
-        soundManager.PlaySE(failureSE);
+        soundManager.PlaySE(failureSE, 0.0f);
         // スコアのリセット
         //score.ResetScore();
     }

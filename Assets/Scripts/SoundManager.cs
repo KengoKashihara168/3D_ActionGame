@@ -27,9 +27,9 @@ public class SoundManager : MonoBehaviour
     /// <param name="clip">SE</param>
     /// <param name="isLoop">SEのループフラグ</param>
     /// <param name="isStopBGM">BGM停止フラグ</param>
-    public void PlaySE(AudioClip clip, bool isStopBGM = false)
+    public void PlaySE(AudioClip clip,float endTime = 99.9f, bool isStopBGM = false)
     {
-        if (IsEndSE(clip.name, clip.length) == false) return;
+        if (IsEndSE(clip.name, endTime) == false) return;
 
         // BGMを停止
         if (isStopBGM) audioSource.Pause();
