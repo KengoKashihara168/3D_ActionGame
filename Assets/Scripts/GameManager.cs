@@ -19,9 +19,10 @@ public class GameManager : MonoBehaviour
         GameClear, // ゲームクリアー
     }
 
-    [SerializeField] private Player      player      = null; // プレイヤー
-    [SerializeField] private CardManager cardManager = null; // カードマネージャー
-    [SerializeField] private GameClearManager  clearManager  = null; // ゲームクリアマネージャー
+    [SerializeField] private Player           player       = null; // プレイヤー
+    [SerializeField] private CardManager      cardManager  = null; // カードマネージャー
+    [SerializeField] private GameClearManager clearManager = null; // ゲームクリアマネージャー
+    [SerializeField] private SoundManager     soundManager = null; // サウンドマネージャー
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
         cardManager.Initialize();
         // ゲームクリアマネージャーの初期化
         clearManager.Initialize();
+        // サウンドマネージャーの初期化
+        soundManager.Initialize();
     }
 
     // Update is called once per frame

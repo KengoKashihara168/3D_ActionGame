@@ -9,6 +9,9 @@ public class CardManager : MonoBehaviour
     [SerializeField] private GameObject   cardPrefab   = null;
     [SerializeField] private Material[]   cardMaterial = null;
     //[SerializeField] private Score        score        = null; // スコア
+    [SerializeField] private SoundManager soundManager = null;
+    [SerializeField] private AudioClip    successSE = null;
+    [SerializeField] private AudioClip    failureSE = null;
 
     private Card[]  cards;      // カードリスト
     private int beforeIndex; // 前に獲得したカード
@@ -261,6 +264,8 @@ public class CardManager : MonoBehaviour
         beforeIndex = index;
         // カードを非表示にする
         HideCard(index);
+        // SEを再生する
+        soundManager.PlaySE(successSE);
     }
 
     /// <summary>
@@ -268,7 +273,7 @@ public class CardManager : MonoBehaviour
     /// </summary>
     private void ReflectedInScore(int index)
     {
-        int point = 100; // 得点
+        //int point = 100; // 得点
 
         // 加点
         //score.AddScore(point);
@@ -298,6 +303,8 @@ public class CardManager : MonoBehaviour
         ResetCardStatus();
         // カードのインデックスを最初に戻す
         beforeIndex = -1;
+        // SEの再生
+        soundManager.PlaySE(failureSE);
         // スコアのリセット
         //score.ResetScore();
     }
