@@ -1066,7 +1066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8578c6919972864280b64fc93ac1d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 30
+  MaxSpeed: 80
   moveSpeed: 100
 --- !u!114 &754204377
 MonoBehaviour:
@@ -1080,6 +1080,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a396db1ff2bfb14a9dce11e89c66bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 1703370579}
+  runningSE: {fileID: 8300000, guid: 889cb709aba934dcda9a492b771923f9, type: 3}
 --- !u!65 &754204378
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1716,7 +1718,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 90cc6865433dca54b8a13e73d72517a4, type: 2}
   - {fileID: 2100000, guid: 0b9f77810a05319449c4fd1f2d408fee, type: 2}
   soundManager: {fileID: 1703370579}
-  soundEffect: {fileID: 8300000, guid: 0d47c9f65b3804e7a9235b53cafd190f, type: 3}
+  successSE: {fileID: 8300000, guid: 0d47c9f65b3804e7a9235b53cafd190f, type: 3}
+  failureSE: {fileID: 8300000, guid: e2636345a5b75442da0b3795fd7bfe00, type: 3}
 --- !u!4 &1118765127
 Transform:
   m_ObjectHideFlags: 0
@@ -2534,7 +2537,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: eee093b22d309461ea801010b58b7f83, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0

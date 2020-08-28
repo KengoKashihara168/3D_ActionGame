@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private SoundManager soundManager = null; // サウンドマネージャー
+    [SerializeField] private AudioClip    runningSE    = null; // 走るSE
     private PlayerMove move;
-    private LineRenderer line;
 
     public void Initialize()
     {
@@ -36,6 +37,20 @@ public class Player : MonoBehaviour
         }
 
         move.Movement(dir);
+
+        RunningSE();
+    }
+
+    private void RunningSE()
+    {
+        if (move.IsMoving())
+        {
+            soundManager.PlaySE(runningSE);
+        }
+        else
+        {
+            soundManager.StopSE(runningSE);
+        }
     }
 
     /// <summary>

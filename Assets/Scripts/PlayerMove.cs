@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private float MaxSpeed = 0.0f;
-    [SerializeField] private float moveSpeed = 0.0f;
+    [SerializeField] private float MaxSpeed  = 0.0f; // 最高移動速度
+    [SerializeField] private float moveSpeed = 0.0f; // 移動速度
 
     private Rigidbody rigid;
 
@@ -48,5 +48,19 @@ public class PlayerMove : MonoBehaviour
             vel.z = 0.0f;
         }
         rigid.velocity = vel;
+    }
+
+    /// <summary>
+    /// 移動しているか
+    /// </summary>
+    /// <returns>移動判定</returns>
+    public bool IsMoving()
+    {
+        Vector3 vel = rigid.velocity;
+        if (vel.sqrMagnitude > 0.0f)
+        {
+            return true;
+        }
+        return false;
     }
 }
